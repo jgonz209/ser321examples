@@ -266,6 +266,7 @@ class WebServer {
             builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
             builder.append("firstname encoded: " + firstnameEncoded);
+            builder.append("\n");
             builder.append("lastname encoded: " + lastnameEncoded);
 
           } catch (Exception exe) {
