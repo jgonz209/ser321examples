@@ -257,17 +257,24 @@ class WebServer {
             String firstname = query_pairs.get("firstname");
             String lastname = query_pairs.get("lastname");
 
-            // Encode data using BASE64
-            String firstnameEncoded = Base64.getEncoder().encodeToString(firstname.getBytes());
-            String lastnameEncoded = Base64.getEncoder().encodeToString(lastname.getBytes());
+            // error handling when an argument is null, has special character, or has numbers
+            if (firstname != null && lastname != null) {
+              // Encode data using BASE64
+              String firstnameEncoded = Base64.getEncoder().encodeToString(firstname.getBytes());
+              String lastnameEncoded = Base64.getEncoder().encodeToString(lastname.getBytes());
 
-            // Generate response
-            builder.append("HTTP/1.1 200 OK\n");
-            builder.append("Content-Type: text/html; charset=utf-8\n");
-            builder.append("\n");
-            builder.append("firstname encoded: " + firstnameEncoded + "\n");
-            builder.append("lastname encoded: " + lastnameEncoded);
-
+              // Generate response
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("firstname encoded: " + firstnameEncoded + "\n");
+              builder.append("lastname encoded: " + lastnameEncoded);
+            } else {
+              builder.append("HTTP/1.1 400 Bad Request\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Error, The encrypt request reqruires two arguments");
+            }
           } catch (Exception exe) {
               builder.append("HTTP/1.1 400 Bad Request\n");
               builder.append("Content-Type: text/html; charset=utf-8\n");
