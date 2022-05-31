@@ -272,7 +272,7 @@ class WebServer {
               builder.append("HTTP/1.1 400 Bad Request\n");
               builder.append("Content-Type: text/html; charset=utf-8\n");
               builder.append("\n");
-              builder.append("Error, The encrypt request only accepts two string arguments");
+              builder.append("Error, The encrypt request is not formatted correctly");
             }
           } else {
           // if the request is not recognized at all
