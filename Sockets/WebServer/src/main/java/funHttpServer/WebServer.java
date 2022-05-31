@@ -254,8 +254,8 @@ class WebServer {
             query_pairs = splitQuery(request.replace("encrypt?", ""));
 
             // extract required fields from parameters
-            String firstname = String.parseString(query_pairs.get("firstname"));
-            String lastname = String.parseString(query_pairs.get("lastname"));
+            String firstname = query_pairs.get("firstname");
+            String lastname = query_pairs.get("lastname");
 
             // Encode data using BASE64
             String firstnameEncoded = Base64.getEncoder().encodeToString(firstname.getBytes());
