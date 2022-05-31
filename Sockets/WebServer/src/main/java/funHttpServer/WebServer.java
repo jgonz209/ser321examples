@@ -25,6 +25,8 @@ import java.util.Random;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.nio.charset.Charset;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 class WebServer {
   public static void main(String args[]) {
@@ -194,9 +196,7 @@ class WebServer {
             builder.append("File not found: " + file);
           }
         } else if (request.contains("multiply?")) {
-          // This multiplies two numbers, there is NO error handling, so when
-          // wrong data is given this just crashes
-
+          // This multiplies two numbers, with error handling.
           try {
 
             Map<String, String> query_pairs = new LinkedHashMap<String, String>();
@@ -223,7 +223,6 @@ class WebServer {
             builder.append("Content-Type: text/html; charset=utf-8\n");
             builder.append("\n");
             builder.append("Error, The multiply request needs two arguments that are integers.");
-
           }
         } else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
@@ -246,9 +245,37 @@ class WebServer {
           // TODO: Parse the JSON returned by your fetch and create an appropriate
           // response based on what the assignment document asks for
 
-        } else {
-          // if the request is not recognized at all
+        } else if (request.contains("encrypt?")) {
+          // This reads two arguments and displays the two arguments encrypted using Base64
+          try {
 
+            Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+            // extract path parameters
+            query_pairs = splitQuery(request.replace("encrypt?", ""));
+
+            // extract required fields from parameters
+            String firstname = String.parseString(query_pairs.get("firstname"));
+            String lastname = String.parseString(query_pairs.get("lastname"));
+
+            // Encode data using BASE64
+            String firstnameEncoded = Base64.getEncoder().encodeToString(firstname.getBytes());
+            String lastnameEncoded = Base64.getEncoder().encodeToString(lastname.getBytes());
+
+            // Generate response
+            builder.append("HTTP/1.1 200 OK\n");
+            builder.append("Content-Type: text/html; charset=utf-8\n");
+            builder.append("\n");
+            builder.append("firstname encoded: " + firstnameEncoded);
+            builder.append("lastname encoded: " + lastnameEncoded);
+
+          } catch (Exception exe) {
+              builder.append("HTTP/1.1 400 Bad Request\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Error, The encrypt request only accepts two string arguments");
+            }
+          } else {
+          // if the request is not recognized at all
           builder.append("HTTP/1.1 400 Bad Request\n");
           builder.append("Content-Type: text/html; charset=utf-8\n");
           builder.append("\n");
