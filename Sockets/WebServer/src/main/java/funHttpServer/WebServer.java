@@ -258,7 +258,7 @@ class WebServer {
             String lastname = query_pairs.get("lastname");
 
             // error handling when an argument is null, has special character, or has numbers
-            if (firstname != null && lastname != null) {
+            if (firstname != "" && lastname != "") {
               // Encode data using BASE64
               String firstnameEncoded = Base64.getEncoder().encodeToString(firstname.getBytes());
               String lastnameEncoded = Base64.getEncoder().encodeToString(lastname.getBytes());
