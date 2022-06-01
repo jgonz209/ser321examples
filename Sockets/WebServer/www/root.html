@@ -8,7 +8,17 @@
 			<li>/file/sample.html -- returns the content of the file sample.html</li>
 			<li>/json -- returns a json of the /random request</a></li>
 			<li>/random -- returns index.html</a></li>
+			<li>/volume -- returns the volume of a cube or cylinder</li>
+			<li>/encrypt -- returns a firstname and a lastname encrypted</li>
 		</ul>
+		<h3>How to use the volume Get request</h3>
+		<p>This request will calculate the volume of a cube or a cylinder. Each shape
+			will have their own calculation and is based on what shape argument is passed.<br>
+			Example cube run --> http://54.215.220.240:9000/volume?shape=cube&edgeLength=2<br>
+			Example cylinder run --> http://54.215.220.240:9000/volume?shape=cylinder&radius=2&height=4</p>
+		<h3>How to use the encrypt Get request</h3>
+		<p>This request will display a firstname and lastname encrypted using BASE64.<br>
+			Example run --> http://54.215.220.240:9000/encrypt?firstname=James&lastname=Lee</p>
 		<h3>File Structure in www (you can use /file/www/FILENAME):</h3>
 		${links}
 	</body>
