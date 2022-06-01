@@ -237,7 +237,7 @@ class WebServer {
             String shape = query_pairs.get("shape");
             double result = 0.0;
 
-            if (shape == "cube") {
+            if (shape.equals("cube")) {
                 double edgeLength = Double.parseDouble(query_pairs.get("edgeLength"));
                 result = Math.pow(edgeLength, 3);
 
@@ -246,7 +246,7 @@ class WebServer {
                 builder.append("Content-Type: text/html; charset=utf-8\n");
                 builder.append("\n");
                 builder.append("Volume of cube is: " + result);
-            } else if (shape == "cylinder") {
+            } else if (shape.equals("cylinder")) {
               double radius = Double.parseDouble(query_pairs.get("radius"));
               double height = Double.parseDouble(query_pairs.get("height"));
 
