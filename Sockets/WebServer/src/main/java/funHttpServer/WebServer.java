@@ -261,7 +261,7 @@ class WebServer {
               builder.append("HTTP/1.1 400 Bad Request\n");
               builder.append("Content-Type: text/html; charset=utf-8\n");
               builder.append("\n");
-              builder.append("Error, The volume request needs the shape argument to be 'cube' or 'cylinder'.");
+              builder.append("Error, The volume request needs the shape argument to be 'cube' or 'cylinder'. " + shape);
             }
           } catch (Exception exe) {
             // TODO: Include error handling here with a correct error code and
