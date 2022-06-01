@@ -237,7 +237,7 @@ class WebServer {
             String shape = query_pairs.get("shape");
             double result = 0.0;
 
-            if (shape.toLowerCase() == "cube") {
+            if (shape == "cube") {
                 double edgeLength = Double.parseDouble(query_pairs.get("edgeLength"));
                 result = Math.pow(edgeLength, 3);
 
@@ -246,7 +246,7 @@ class WebServer {
                 builder.append("Content-Type: text/html; charset=utf-8\n");
                 builder.append("\n");
                 builder.append("Volume of cube is: " + result);
-            } else if (shape.toLowerCase() == "cylinder") {
+            } else if (shape == "cylinder") {
               double radius = Double.parseDouble(query_pairs.get("radius"));
               double height = Double.parseDouble(query_pairs.get("height"));
 
@@ -261,7 +261,7 @@ class WebServer {
               builder.append("HTTP/1.1 400 Bad Request\n");
               builder.append("Content-Type: text/html; charset=utf-8\n");
               builder.append("\n");
-              builder.append("Error, The volume request needs the shape argument to be 'cube' or 'cylinder'. " + shape);
+              builder.append("Error, The volume request needs the shape argument to be 'cube' or 'cylinder'.");
             }
           } catch (Exception exe) {
             // TODO: Include error handling here with a correct error code and
