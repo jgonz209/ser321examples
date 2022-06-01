@@ -27,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.nio.charset.Charset;
 import java.util.Base64;
 import java.util.Base64.Encoder;
+import java.lang.Math;
 
 class WebServer {
   public static void main(String args[]) {
@@ -224,7 +225,53 @@ class WebServer {
             builder.append("\n");
             builder.append("Error, The multiply request needs two arguments that are integers.");
           }
-        } else if (request.contains("github?")) {
+        } else if (request.contains("volume?")) {
+          // This calculates the volume of a cube or cylinder
+          try {
+
+            Map<String, String> query_pairs = new LinkedHashMap<String, String>();
+            // extract path parameters
+            query_pairs = splitQuery(request.replace("volume?", ""));
+
+            // extract required fields from first parameter
+            String shape = query_pairs.get("shape");
+            double result = 0.0;
+
+            if (shape.toLowerCase() == "cube") {
+                double edgeLength = Double.parseDouble(query_pairs.get("edgeLength"));
+                result = Math.pow(edgeLength, 3);
+
+                // Generate response
+                builder.append("HTTP/1.1 200 OK\n");
+                builder.append("Content-Type: text/html; charset=utf-8\n");
+                builder.append("\n");
+                builder.append("Volume of cube is: " + result);
+            } else if (shape.toLowerCase() == "cylinder") {
+              double radius = Double.parseDouble(query_pairs.get("radius"));
+              double height = Double.parseDouble(query_pairs.get("height"));
+
+              result = Math.PI * (Math.pow(radius, 2)) * height;
+
+              // Generate response
+              builder.append("HTTP/1.1 200 OK\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Volume of cylinder is: " + result);
+            } else {
+              builder.append("HTTP/1.1 400 Bad Request\n");
+              builder.append("Content-Type: text/html; charset=utf-8\n");
+              builder.append("\n");
+              builder.append("Error, The volume request needs the shape argument to be 'cube' or 'cylinder'.");
+            }
+          } catch (Exception exe) {
+            // TODO: Include error handling here with a correct error code and
+            // a response that makes sense
+            builder.append("HTTP/1.1 400 Bad Request\n");
+            builder.append("Content-Type: text/html; charset=utf-8\n");
+            builder.append("\n");
+            builder.append("Error, The volume request is not formatted correctly or the input has invalid values.");
+          }
+        }else if (request.contains("github?")) {
           // pulls the query from the request and runs it with GitHub's REST API
           // check out https://docs.github.com/rest/reference/
           //
